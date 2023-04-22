@@ -130,7 +130,7 @@
   <form>
   <a id="TOP"></a><label for="descriptionBox">ParkingText</label>
     <textarea id="descriptionBox" placeholder="Park your text here"></textarea><br>
-    <label for="h3-input">ID</label>
+    <label for="h3-input">ID amp&#x003C;amp </label>
     <input type="text" id="h3-input"  placeholder="Enter id "><br>
     <br>
     <label for="h4-input">Desc1</label>
@@ -171,7 +171,7 @@ const copyButton = document.getElementById("copy-button");
 const generateButton = document.getElementById("submit-button");
 generateButton.addEventListener("click", () => {
   const codeElement = document.getElementById("code");
-  codeElement.innerHTML = `<code>  &lt;table&gt;&lt;tr&gt;&lt;td&gt;${h3Input.value}&lt;/td&gt;&lt;td&gt;${h4Input.value}&lt;/td&gt;&lt;td&gt;${h5Input.value}&lt;/td&gt;&lt;td&gt;${h6Input.value}&lt;/td&gt;&lt;td&gt;${h7Input.value}&lt;/td&gt;&lt;td&gt;${h8Input.value}&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt; 
+  codeElement.innerHTML = `<code>  &#x003C;table&#x003E;&#x003C;tr&#x003E;&#x003C;td&#x003E;${h3Input.value}&#x003C;/td&#x003E;&#x003C;td&#x003E;${h4Input.value}&#x003C;/td&#x003E;&#x003C;td&#x003E;${h5Input.value}&#x003C;/td&#x003E;&#x003C;td&#x003E;${h6Input.value}&#x003C;/td&#x003E;&#x003C;td&#x003E;${h7Input.value}&#x003C;/td&#x003E;&#x003C;td&#x003E;${h8Input.value}&#x003C;/td&#x003E;&#x003C;/tr&#x003E;&#x003C;/table&#x003E; 
 </code>`;
   // Hide all tables except for the one with the matching ID
   const parkingSection = document.getElementById("parkingsection");
@@ -192,11 +192,11 @@ h3Input.addEventListener("input", () => {
   for (let i = 0; i < rows.length; i++) {
     const cells = rows[i].getElementsByTagName("td");
     if (cells[0].innerText === h3Input.value) {
-      h4Input.value = cells[1].innerHTML.replace(/<br>/g, "&lt;br&gt;").replace(/<b>/g, "&lt;b&gt;").replace(/<\/b>/g, "&lt;/b&gt;").replace(/<u>/g, "&lt;u&gt;").replace(/<\/u>/g, "&lt;/u&gt;");
-          h5Input.value = cells[2].innerHTML.replace(/<br>/g, "&lt;br&gt;").replace(/<b>/g, "&lt;b&gt;").replace(/<\/b>/g, "&lt;/b&gt;").replace(/<u>/g, "&lt;u&gt;").replace(/<\/u>/g, "&lt;/u&gt;");
-          h6Input.value = cells[3].innerHTML.replace(/<br>/g, "&lt;br&gt;").replace(/<b>/g, "&lt;b&gt;").replace(/<\/b>/g, "&lt;/b&gt;").replace(/<u>/g, "&lt;u&gt;").replace(/<\/u>/g, "&lt;/u&gt;");
-          h7Input.value = cells[4].innerHTML.replace(/<br>/g, "&lt;br&gt;").replace(/<b>/g, "&lt;b&gt;").replace(/<\/b>/g, "&lt;/b&gt;").replace(/<u>/g, "&lt;u&gt;").replace(/<\/u>/g, "&lt;/u&gt;");
-          h8Input.value = cells[5].innerHTML.replace(/<br>/g, "&lt;br&gt;").replace(/<b>/g, "&lt;b&gt;").replace(/<\/b>/g, "&lt;/b&gt;").replace(/<u>/g, "&lt;u&gt;").replace(/<\/u>/g, "&lt;/u&gt;");
+      h4Input.value = cells[1].innerHTML.replace(/<br>/g, "&#x003C;br&#x003E;").replace(/<b>/g, "&#x003C;b&#x003E;").replace(/<\/b>/g, "&#x003C;/b&#x003E;").replace(/<u>/g, "&#x003C;u&#x003E;").replace(/<\/u>/g, "&#x003C;/u&#x003E;");
+          h5Input.value = cells[2].innerHTML.replace(/<br>/g, "&#x003C;br&#x003E;").replace(/<b>/g, "&#x003C;b&#x003E;").replace(/<\/b>/g, "&#x003C;/b&#x003E;").replace(/<u>/g, "&#x003C;u&#x003E;").replace(/<\/u>/g, "&#x003C;/u&#x003E;");
+          h6Input.value = cells[3].innerHTML.replace(/<br>/g, "&#x003C;br&#x003E;").replace(/<b>/g, "&#x003C;b&#x003E;").replace(/<\/b>/g, "&#x003C;/b&#x003E;").replace(/<u>/g, "&#x003C;u&#x003E;").replace(/<\/u>/g, "&#x003C;/u&#x003E;");
+          h7Input.value = cells[4].innerHTML.replace(/<br>/g, "&#x003C;br&#x003E;").replace(/<b>/g, "&#x003C;b&#x003E;").replace(/<\/b>/g, "&#x003C;/b&#x003E;").replace(/<u>/g, "&#x003C;u&#x003E;").replace(/<\/u>/g, "&#x003C;/u&#x003E;");
+          h8Input.value = cells[5].innerHTML.replace(/<br>/g, "&#x003C;br&#x003E;").replace(/<b>/g, "&#x003C;b&#x003E;").replace(/<\/b>/g, "&#x003C;/b&#x003E;").replace(/<u>/g, "&#x003C;u&#x003E;").replace(/<\/u>/g, "&#x003C;/u&#x003E;");
       rows[i].style.display = "table-row";
     } else {
       rows[i].style.display = "none";
@@ -263,14 +263,14 @@ function addLineBreakAndBold(inputElement) {
       const cursorPosition = inputElement.selectionStart;
       inputElement.value =
         inputElement.value.substring(0, cursorPosition) +
-        "&lt;br&gt; " +
+        "&#x003C;br&#x003E; " +
         inputElement.value.substring(cursorPosition);
     } else if (event.ctrlKey && event.key === "b") {
       event.preventDefault();
       const cursorPosition = inputElement.selectionStart;
       inputElement.value =
         inputElement.value.substring(0, cursorPosition) +
-        "&lt;b&gt;  &lt;/b&gt; " +
+        "&#x003C;b&#x003E;  &#x003C;/b&#x003E; " +
         inputElement.value.substring(cursorPosition);
       inputElement.setSelectionRange(cursorPosition + 9, cursorPosition + 9); // Place the cursor inside the <b> tag
     } else if (event.ctrlKey && event.key === "u") {
@@ -278,7 +278,7 @@ function addLineBreakAndBold(inputElement) {
       const cursorPosition = inputElement.selectionStart;
       inputElement.value =
         inputElement.value.substring(0, cursorPosition) +
-        "&lt;u&gt; &lt;/u&gt; " +
+        "&#x003C;u&#x003E; &#x003C;/u&#x003E; " +
         inputElement.value.substring(cursorPosition);
       inputElement.setSelectionRange(cursorPosition + 10, cursorPosition + 10); // Place the cursor inside the <u> tag
     }
@@ -287,7 +287,7 @@ function addLineBreakAndBold(inputElement) {
       const cursorPosition = inputElement.selectionStart;
       inputElement.value =
         inputElement.value.substring(0, cursorPosition) +
-        "&lt;b&gt;&lt;u&gt; &lt;/u&gt;&lt;/b&gt; " +
+        "&#x003C;b&#x003E;&#x003C;u&#x003E; &#x003C;/u&#x003E;&#x003C;/b&#x003E; " +
         inputElement.value.substring(cursorPosition);
       inputElement.setSelectionRange(cursorPosition + 19, cursorPosition + 19); // Place the cursor inside the <u> tag
     }
