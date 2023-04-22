@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>transposeoftoptableonly, color change of input </title>
+  <title>transposeof all table, color not changed, autofill</title>
 </head>
 <body>
   <form>
@@ -15,10 +15,11 @@
     <label for="h5-input">Ordertext </label>
     <textarea id="h5-input" placeholder="Enter your description here"></textarea>
     <br>
-      <button type="button" id="submit-button">Submit</button>
-      <button type="button" id="copy-button">Copy to Clipboard</button>
-      <button type="button" id="transpose-button">Transpose</button>
+    <button type="button" id="transpose-button">Transpose</button>
 
+    <button type="button" id="hide-button">Hide Rows</button>
+    <button type="button" id="copy-button">Copy to Clipboard</button>
+      <button type="button" id="submit-button">Submit</button>
   </form>
   <br><br>
   <div id="code">
@@ -33,98 +34,131 @@ const h4Input = document.getElementById("h4-input");
 const h4Element = document.getElementById("h4-element");
 const h5Input = document.getElementById("h5-input");
 const h5Element = document.getElementById("h5-element");
-const generateButton = document.getElementById("submit-button");
 const copyButton = document.getElementById("copy-button");
+const generateButton = document.getElementById("submit-button");
 generateButton.addEventListener("click", () => {
   const codeElement = document.getElementById("code");
   codeElement.innerHTML = `<code>  &lt;table&gt;&lt;tr&gt;&lt;td&gt;${h3Input.value}&lt;/td&gt;&lt;td&gt;${h4Input.value}&lt;/td&gt;&lt;td&gt;${h5Input.value}&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt; 
 </code>`;
+
+  // Hide all tables except for the one with the matching ID
+  const parkingSection = document.getElementById("parkingsection");
+  const rows = parkingSection.getElementsByTagName("tr");
+  for (let i = 0; i < rows.length; i++) {
+    const cells = rows[i].getElementsByTagName("td");
+    if (cells[0].innerText === h3Input.value) {
+      rows[i].style.display = "table-row";
+    } else {
+      rows[i].style.display = "none";
+    }
+  }
 });
+
+//aUTOFILL SCRIPT//
+h3Input.addEventListener("input", () => {
+  const parkingSection = document.getElementById("parkingsection");
+  const rows = parkingSection.getElementsByTagName("tr");
+  for (let i = 0; i < rows.length; i++) {
+    const cells = rows[i].getElementsByTagName("td");
+    if (cells[0].innerText === h3Input.value) {
+      h4Input.value = cells[1].innerText;
+      h5Input.value = cells[2].innerText;
+      rows[i].style.display = "table-row";
+    } else {
+      rows[i].style.display = "none";
+    }
+  }
+});
+
+
+//Hide//
+function hideRows() {
+  const parkingSection = document.getElementById("parkingsection");
+  const rows = parkingSection.getElementsByTagName("tr");
+  for (let i = 0; i < rows.length; i++) {
+    const cells = rows[i].getElementsByTagName("td");
+    if (cells[0].innerText !== h3Input.value) {
+      rows[i].style.display = "none";
+    }
+  }
+}
+//copyscript//
 copyButton.addEventListener("click", () => {
       const codeElement = document.getElementById("code");
       const text = codeElement.innerText;
       navigator.clipboard.writeText(text);
       alert("Copied to clipboard!");
     });
-h3Input.addEventListener("input", () => {
-  const parkingSection = document.getElementById("parkingsection");
-  const rows = parkingSection.getElementsByTagName("tr");
-  let found = false;
-  for (let i = 0; i < rows.length; i++) {
-    const cells = rows[i].getElementsByTagName("td");
-    if (cells[0].innerText === h3Input.value) {
-      h4Input.value = cells[1].innerText;
-      h5Input.value = cells[2].innerText;
-      found = true;
-      break;
-    }
-  }
-});
-h3Input.addEventListener("input", () => {
-  const parkingSection = document.getElementById("parkingsection");
-  const rows = parkingSection.getElementsByTagName("tr");
-  let found = false;
-  for (let i = 0; i < rows.length; i++) {
-    const cells = rows[i].getElementsByTagName("td");
-    if (cells[0].innerText === h3Input.value) {
-      h4Input.value = cells[1].innerText.replace(/\n/g, "&lt;br&gt;");
-      h5Input.value = cells[2].innerText.replace(/\n/g, "&lt;br&gt;");
-      found = true;
-      //h3Input.style.color = "green"; // set text color to green for auto-populated value
-      //break;
-    }
-  }
-  if (found) {
-  h4Input.style.color = "blue";
-  h5Input.style.color = "blue";
-} else {
-  h4Input.style.color = "red";
-  h5Input.style.color = "red";
-}
-});
-h4Input.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    const cursorPosition = h4Input.selectionStart;
-    h4Input.value =
-      h4Input.value.substring(0, cursorPosition) +
-      "&lt;br&gt;"+
-      h4Input.value.substring(cursorPosition);
-  }
-});
-h5Input.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    const cursorPosition = h5Input.selectionStart;
-    h5Input.value =
-      h5Input.value.substring(0, cursorPosition) +
-      "&lt;br&gt;" +
-      h5Input.value.substring(cursorPosition);
-  }
-});
-const transposeButton = document.getElementById("transpose-button");
+    const transposeButton = document.getElementById("transpose-button");
+
 transposeButton.addEventListener("click", () => {
-  const tableElement = document.querySelector("table");
-  const rows = tableElement.getElementsByTagName("tr");
-  const numCols = rows[0].getElementsByTagName("td").length;
+  const parkingSection = document.getElementById("parkingsection");
+  const rows = parkingSection.getElementsByTagName("tr");
+  const cells = rows[0].getElementsByTagName("td");
+  const numRows = rows.length;
+  const numCols = cells.length;
+  const tableData = [];
+  
+  // Collect table data into a 2D array
+  for (let i = 0; i < numRows; i++) {
+    const rowCells = rows[i].getElementsByTagName("td");
+    const rowData = [];
+    for (let j = 0; j < numCols; j++) {
+      rowData.push(rowCells[j].innerText);
+    }
+    tableData.push(rowData);
+  }
+  
+  // Clear table contents
+  while (parkingSection.firstChild) {
+    parkingSection.removeChild(parkingSection.firstChild);
+  }
+
+  // Transpose table data
+  const transposedData = [];
+  for (let i = 0; i < numCols; i++) {
+    const transposedRow = [];
+    for (let j = 0; j < numRows; j++) {
+      transposedRow.push(tableData[j][i]);
+    }
+    transposedData.push(transposedRow);
+  }
+
+  // Generate new table with transposed data
   const newTable = document.createElement("table");
-  for (let j = 0; j < numCols; j++) {
+  for (let i = 0; i < numCols; i++) {
     const newRow = document.createElement("tr");
-    for (let i = 0; i < rows.length; i++) {
+    for (let j = 0; j < numRows; j++) {
       const newCell = document.createElement("td");
-      newCell.innerText = rows[i].getElementsByTagName("td")[j].innerText;
+      const newCellText = document.createTextNode(transposedData[i][j]);
+      newCell.appendChild(newCellText);
       newRow.appendChild(newCell);
     }
     newTable.appendChild(newRow);
   }
-  tableElement.parentNode.replaceChild(newTable, tableElement);
+
+  // Add new table to parking section
+  parkingSection.appendChild(newTable);
+  
+  // Toggle button text
+  if (transposeButton.innerText === "Transpose Rows") {
+    transposeButton.innerText = "Transpose Columns";
+  } else {
+    transposeButton.innerText = "Transpose Rows";
+  }
 });
+
+
+
 
  </script>
  <section id="parkingsection">
-  <table><tr><td>005</td><td>abc<br>efg<br>qwerty</td><td>syz<br> sdf <br>werty</td></tr></table>
-  <table><tr><td>006</td><td>shiva</td><td>sita<br>ram</td></tr></table>
+  <table><tr><td>004</td><td>shiva</td><td>good</td></tr></table>
+  <table><tr><td>003</td><td>OPMCM et.al</td><td>good done chatgpt</td></tr></table>
+  <table><tr><td>002</td><td>debaka</td><td>good girl my wife</td></tr></table>
+  <table><tr><td>001</td><td>निवेदक</td><td>123</td></tr></table>
+
 </section>
 </body>
 </html>
-<!--transpose of top table, color changed of input, auto fill, -->
+<!--transpose of all tables, auto filled with breaks, bold and underline, format preserved in transpose-->
