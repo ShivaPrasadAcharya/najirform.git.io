@@ -1,31 +1,158 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>transposeof all table, color not changed, autofill</title>
+  <title>format preserved in transpose, autofillwith breaks n bolds, table filtered</title>
+
+    <style>
+      /* set body styles */
+      body {
+        background-color: #ffffff;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        font-size: smaller;
+      }
+
+      /* set form styles */
+      form {
+        margin: 40px auto;
+        max-width: 600px;
+      }
+
+      label {
+        color: #666666;
+        display: block;
+        font-size: 12px;
+        font-weight: bold;
+        margin: 10px 0;
+      }
+
+      input,
+      textarea {
+        border: 2px solid #cccccc;
+        border-radius: 4px;
+        font-size: 12px;
+        padding: 10px;
+        width: 100%;
+      }
+
+      input:focus,
+      textarea:focus {
+        border-color: #0070f3;
+        box-shadow: 0 0 0 2px rgba(0, 112, 243, 0.5);
+        outline: none;
+      }
+
+      button {
+        background-color: #0070f3;
+        border: none;
+        border-radius: 4px;
+        color: #ffffff;
+        cursor: pointer;
+        font-size: 12px;
+        margin: 20px 0;
+        padding: 10px 20px;
+        transition: background-color 0.2s;
+      }
+
+      button:hover {
+        background-color: #0061c9;
+      }
+
+      #transpose-button {
+        background-color: #b71c1c;
+        margin-right: 10px;
+      }
+
+      #transpose-button:hover {
+        background-color: #8c1b1b;
+      }
+
+      #copy-button {
+        background-color: #0070f3;
+        margin-right: 10px;
+      }
+
+      #copy-button:hover {
+        background-color: #0061c9;
+      }
+
+      #submit-button {
+        background-color: #1b5e20;
+      }
+
+      #submit-button:hover {
+        background-color: #0d530d;
+      }
+
+      /* set code block styles */
+      #code {
+        background-color: #f7f7f7;
+        border-radius: 4px;
+        margin: 40px auto;
+        max-width: 600px;
+        padding: 20px;
+        white-space: pre-wrap;
+      }
+
+      #code code {
+        font-size: 16px;
+      }
+      #descriptionBox{
+        background-color: yellow;
+      }
+      
+      #developedby {
+               font-style: italic;
+               color: brown;
+          }
+
+          .link-container {
+               position: fixed;
+               bottom: 50%;
+               left: 0;
+               right: 0;
+               text-align: bottom;
+          }
+
+          /* Style for the links */
+          .link-container a {
+               color: rgba(255, 38, 0, 0.971);
+               text-decoration: none;
+               display: inline-block;
+               margin-right: 20px;
+               font-size: normal;
+          }
+    </style>
+
 </head>
 <body>
   <form>
-    <label for="descriptionBox">Description </label>
-    <textarea id="descriptionBox" placeholder="Enter your description here"></textarea><br>
+  <a id="TOP"></a><label for="descriptionBox">ParkingText</label>
+    <textarea id="descriptionBox" placeholder="Park your text here"></textarea><br>
     <label for="h3-input">ID</label>
-    <input type="text" id="h3-input"><br>
+    <input type="text" id="h3-input"  placeholder="Enter id "><br>
     <br>
-    <label for="h4-input">Prescription</label>
-    <input type="text" id="h4-input"><br>
-    <label for="h5-input">Ordertext </label>
-    <textarea id="h5-input" placeholder="Enter your description here"></textarea>
+    <label for="h4-input">Desc1</label>
+    <textarea id="h4-input" placeholder="Enter applicant, opponent & casename(no.),here"></textarea>
     <br>
-    <button type="button" id="transpose-button">Transpose</button>
+    <label for="h5-input">Desc2 </label>
+    <textarea id="h5-input" placeholder="Enter your Facts here"></textarea>
+    <br>
+    <label for="h6-input">Desc3 </label>
+    <textarea id="h6-input" placeholder="Enter your precedents here"></textarea>
+    <br>
+    <label for="h7-input">Desc4</label>
+    <textarea id="h7-input" placeholder="Enter your criticism here"></textarea>
 
-    <button type="button" id="hide-button">Hide Rows</button>
-    <button type="button" id="copy-button">Copy to Clipboard</button>
+    <label for="h8-input">Desc5</label>
+    <textarea id="h8-input" placeholder="Enter your keywords here"></textarea>
+    <br>
+     <button type="button" id="transpose-button">Transpose</button>
+      <button type="button" id="copy-button">Copy to Clipboard</button>
       <button type="button" id="submit-button">Submit</button>
   </form>
-  <br><br>
   <div id="code">
-    <code> 
- &lt;table&gt;&lt;tr&gt;&lt;td&gt;ID&lt;/td&gt;&lt;td&gt;Prescription&lt;/td&gt;&lt;td&gt;Ordertext&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-      </code>
   </div>
   <script>
     const h3Input = document.getElementById("h3-input");
@@ -34,13 +161,18 @@ const h4Input = document.getElementById("h4-input");
 const h4Element = document.getElementById("h4-element");
 const h5Input = document.getElementById("h5-input");
 const h5Element = document.getElementById("h5-element");
+const h6Input = document.getElementById("h6-input");
+const h6Element = document.getElementById("h6-element");
+const h7Input = document.getElementById("h7-input");
+const h7Element = document.getElementById("h7-element");
+const h8Input = document.getElementById("h8-input");
+const h8Element = document.getElementById("h8-element");
 const copyButton = document.getElementById("copy-button");
 const generateButton = document.getElementById("submit-button");
 generateButton.addEventListener("click", () => {
   const codeElement = document.getElementById("code");
-  codeElement.innerHTML = `<code>  &lt;table&gt;&lt;tr&gt;&lt;td&gt;${h3Input.value}&lt;/td&gt;&lt;td&gt;${h4Input.value}&lt;/td&gt;&lt;td&gt;${h5Input.value}&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt; 
+  codeElement.innerHTML = `<code>  &lt;table&gt;&lt;tr&gt;&lt;td&gt;${h3Input.value}&lt;/td&gt;&lt;td&gt;${h4Input.value}&lt;/td&gt;&lt;td&gt;${h5Input.value}&lt;/td&gt;&lt;td&gt;${h6Input.value}&lt;/td&gt;&lt;td&gt;${h7Input.value}&lt;/td&gt;&lt;td&gt;${h8Input.value}&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt; 
 </code>`;
-
   // Hide all tables except for the one with the matching ID
   const parkingSection = document.getElementById("parkingsection");
   const rows = parkingSection.getElementsByTagName("tr");
@@ -53,7 +185,6 @@ generateButton.addEventListener("click", () => {
     }
   }
 });
-
 //aUTOFILL SCRIPT//
 h3Input.addEventListener("input", () => {
   const parkingSection = document.getElementById("parkingsection");
@@ -61,16 +192,17 @@ h3Input.addEventListener("input", () => {
   for (let i = 0; i < rows.length; i++) {
     const cells = rows[i].getElementsByTagName("td");
     if (cells[0].innerText === h3Input.value) {
-      h4Input.value = cells[1].innerText;
-      h5Input.value = cells[2].innerText;
+      h4Input.value = cells[1].innerHTML.replace(/<br>/g, "&lt;br&gt;").replace(/<b>/g, "&lt;b&gt;").replace(/<\/b>/g, "&lt;/b&gt;").replace(/<u>/g, "&lt;u&gt;").replace(/<\/u>/g, "&lt;/u&gt;");
+          h5Input.value = cells[2].innerHTML.replace(/<br>/g, "&lt;br&gt;").replace(/<b>/g, "&lt;b&gt;").replace(/<\/b>/g, "&lt;/b&gt;").replace(/<u>/g, "&lt;u&gt;").replace(/<\/u>/g, "&lt;/u&gt;");
+          h6Input.value = cells[3].innerHTML.replace(/<br>/g, "&lt;br&gt;").replace(/<b>/g, "&lt;b&gt;").replace(/<\/b>/g, "&lt;/b&gt;").replace(/<u>/g, "&lt;u&gt;").replace(/<\/u>/g, "&lt;/u&gt;");
+          h7Input.value = cells[4].innerHTML.replace(/<br>/g, "&lt;br&gt;").replace(/<b>/g, "&lt;b&gt;").replace(/<\/b>/g, "&lt;/b&gt;").replace(/<u>/g, "&lt;u&gt;").replace(/<\/u>/g, "&lt;/u&gt;");
+          h8Input.value = cells[5].innerHTML.replace(/<br>/g, "&lt;br&gt;").replace(/<b>/g, "&lt;b&gt;").replace(/<\/b>/g, "&lt;/b&gt;").replace(/<u>/g, "&lt;u&gt;").replace(/<\/u>/g, "&lt;/u&gt;");
       rows[i].style.display = "table-row";
     } else {
       rows[i].style.display = "none";
     }
   }
 });
-
-
 //Hide//
 function hideRows() {
   const parkingSection = document.getElementById("parkingsection");
@@ -90,75 +222,98 @@ copyButton.addEventListener("click", () => {
       alert("Copied to clipboard!");
     });
     const transposeButton = document.getElementById("transpose-button");
-
-transposeButton.addEventListener("click", () => {
-  const parkingSection = document.getElementById("parkingsection");
-  const rows = parkingSection.getElementsByTagName("tr");
-  const cells = rows[0].getElementsByTagName("td");
-  const numRows = rows.length;
-  const numCols = cells.length;
-  const tableData = [];
-  
-  // Collect table data into a 2D array
-  for (let i = 0; i < numRows; i++) {
-    const rowCells = rows[i].getElementsByTagName("td");
-    const rowData = [];
-    for (let j = 0; j < numCols; j++) {
-      rowData.push(rowCells[j].innerText);
+    transposeButton.addEventListener("click", () => {
+      // Get the currently filtered table
+      const parkingSection = document.getElementById("parkingsection");
+      const rows = parkingSection.getElementsByTagName("tr");
+      let filteredTable = null;
+      for (let i = 0; i < rows.length; i++) {
+        const cells = rows[i].getElementsByTagName("td");
+        if (cells[0].innerText === h3Input.value) {
+          filteredTable = rows[i].parentNode;
+          break;
+        }
+      }
+      if (!filteredTable) {
+        // No matching table found, do nothing
+        return;
+      }
+      // Transpose the filtered table
+      const rowsArray = Array.from(filteredTable.rows);
+      const columnsArray = rowsArray[0].cells.length > 1 ? Array.from(rowsArray[0].cells) : [rowsArray[0]];
+      const newTable = document.createElement("table");
+      for (let j = 0; j < columnsArray.length; j++) {
+        const newRow = document.createElement("tr");
+        for (let i = 0; i < rowsArray.length; i++) {
+          const newCell = document.createElement("td");
+          const cellHtml = rowsArray[i].cells[j].innerHTML; // get the HTML content of the cell
+          newCell.innerHTML = cellHtml; // set the HTML content of the new cell
+          newRow.appendChild(newCell);
+        }
+        newTable.appendChild(newRow);
+      }
+      // Replace the filtered table with the transposed table
+      filteredTable.parentNode.insertBefore(newTable, filteredTable);
+      filteredTable.parentNode.removeChild(filteredTable);
+    });
+function addLineBreakAndBold(inputElement) {
+  inputElement.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      const cursorPosition = inputElement.selectionStart;
+      inputElement.value =
+        inputElement.value.substring(0, cursorPosition) +
+        "&lt;br&gt; " +
+        inputElement.value.substring(cursorPosition);
+    } else if (event.ctrlKey && event.key === "b") {
+      event.preventDefault();
+      const cursorPosition = inputElement.selectionStart;
+      inputElement.value =
+        inputElement.value.substring(0, cursorPosition) +
+        "&lt;b&gt;  &lt;/b&gt; " +
+        inputElement.value.substring(cursorPosition);
+      inputElement.setSelectionRange(cursorPosition + 9, cursorPosition + 9); // Place the cursor inside the <b> tag
+    } else if (event.ctrlKey && event.key === "u") {
+      event.preventDefault();
+      const cursorPosition = inputElement.selectionStart;
+      inputElement.value =
+        inputElement.value.substring(0, cursorPosition) +
+        "&lt;u&gt; &lt;/u&gt; " +
+        inputElement.value.substring(cursorPosition);
+      inputElement.setSelectionRange(cursorPosition + 10, cursorPosition + 10); // Place the cursor inside the <u> tag
     }
-    tableData.push(rowData);
-  }
-  
-  // Clear table contents
-  while (parkingSection.firstChild) {
-    parkingSection.removeChild(parkingSection.firstChild);
-  }
-
-  // Transpose table data
-  const transposedData = [];
-  for (let i = 0; i < numCols; i++) {
-    const transposedRow = [];
-    for (let j = 0; j < numRows; j++) {
-      transposedRow.push(tableData[j][i]);
+    else if (event.ctrlKey && event.key === " ") { // Ctrl+Space
+      event.preventDefault();
+      const cursorPosition = inputElement.selectionStart;
+      inputElement.value =
+        inputElement.value.substring(0, cursorPosition) +
+        "&lt;b&gt;&lt;u&gt; &lt;/u&gt;&lt;/b&gt; " +
+        inputElement.value.substring(cursorPosition);
+      inputElement.setSelectionRange(cursorPosition + 19, cursorPosition + 19); // Place the cursor inside the <u> tag
     }
-    transposedData.push(transposedRow);
-  }
-
-  // Generate new table with transposed data
-  const newTable = document.createElement("table");
-  for (let i = 0; i < numCols; i++) {
-    const newRow = document.createElement("tr");
-    for (let j = 0; j < numRows; j++) {
-      const newCell = document.createElement("td");
-      const newCellText = document.createTextNode(transposedData[i][j]);
-      newCell.appendChild(newCellText);
-      newRow.appendChild(newCell);
-    }
-    newTable.appendChild(newRow);
-  }
-
-  // Add new table to parking section
-  parkingSection.appendChild(newTable);
-  
-  // Toggle button text
-  if (transposeButton.innerText === "Transpose Rows") {
-    transposeButton.innerText = "Transpose Columns";
-  } else {
-    transposeButton.innerText = "Transpose Rows";
-  }
-});
-
-
-
-
+  });
+}
+addLineBreakAndBold(h4Input);
+addLineBreakAndBold(h5Input);
+addLineBreakAndBold(h6Input);
+addLineBreakAndBold(h7Input);
+addLineBreakAndBold(h8Input);
  </script>
- <section id="parkingsection">
-  <table><tr><td>004</td><td>shiva</td><td>good</td></tr></table>
-  <table><tr><td>003</td><td>OPMCM et.al</td><td>good done chatgpt</td></tr></table>
-  <table><tr><td>002</td><td>debaka</td><td>good girl my wife</td></tr></table>
-  <table><tr><td>001</td><td>निवेदक</td><td>123</td></tr></table>
+<a id="MIDDLE"></a> <section id="parkingsection">
+  <table><tr><td>003</td><td>OPMCM et.al</td><td>good done chatgpt</td><td>yes</td><td>qw</td><td>as</td></tr></table>
+  <table><tr><td>002</td><td>debaka</td><td>good girl my wife</td><td>no</td><td>qw</td><td>as</td></tr></table>
+     <table><tr><td>102</td><td> 1.PIL ले सार्थक सम्बन्ध र तात्विक सरोकार मात्र नभई गहिरो अध्ययन मनन र विश्‍लेषण पनि खोज्ने।<br> 2. दायित्व सुम्पिएका कुनै पनि अधिकारी कहाँ जाँदै नगई र उनीहरूलाई कर्तव्य पालनतर्फ सचेतसम्म नगराई PIL ल्याउनु उचित नहुने।3. कुनै कानून विद्यमान छ भने त्यसको पूर्ण पालना गरिनु पर्छ। कानून समय सापेक्ष छैन भने खारेज वा संशोधन गरिनुपर्छ ।<b><u> good</u></b> 4. कुनै कानून विरूद्धको कार्य चाहे व्यक्तिगत अग्रसरतामा गरिएको होस् वा सामूहिकरूपमा गैरकानूनी नै हुन्छ। कुनै पनि बहानामा कानून विरूद्धको कार्य स्वीकार्य नहुने ।5. सांस्कृतिकरूपमा नेपाल विभिन्‍न जातजाति र वर्गमा चलेको प्रथा परम्पराहरूको समन्वयात्मक अन्तरघुलन हो।</td><td> <b><u> precedent </u></b> It is better to ignore than to care:<br><br> A judge sometimes has to listen to negative feedback and comments. Pursuing them all is not possible. If such comments do not adversely affect the administration of justice, it is better for them to ignore them. Tolerant democracy is today's requisite:<b> It is necessary today to strengthen the concept of tolerant democracy </b> by maintaining a proper<u> balance between freedom </u> of expression and the power of court to punish in its contempt. Indiscriminate use of weapon of contempt will wound the justice: Justice should not be perverted by<b><u> contempt of court </u></b> indiscriminate use of the weapon of contempt of court. <b> The main responsibilities assigned to the Supreme Court </b> by the Constitution: <br> (a) to exercise the judicial power <br> (b) to retain intact its judicial authority as a court of record and that of subordinate courts <br> (c) to punish in the contempt if anyone obstructs the administration of justice or disobeys an order or judgment. The following actions fall within the scope of contempt and the court has the right to stop such actions and punish the guilty:<br> (a) If any publication or expression obstructs the course of justice (b) if anyone seeks to create confusion in judicial proceedings by causing undue defamation <br> (c) if anyone acts with the intention of deviating the the court, its judges or employees, litigants and legal practitioners from the course of justice <br> (d) if anyone acts with ill intention to degrade the reputation of the Judiciary in the eyes of the public Courts should also respect matters guaranteed as the rights of individuals: Respecting the right to a fair hearing is the primary responsibility of the court. It has to be followed although no one demands it. <br><br><br> Courts should also respect the subjects guaranteed by the constitution as the rights of individuals.<br> <br> <br> </td><td>qwert</td><td>asdf</td><td>zxcv</td></tr></table>
 
-</section>
+  </section>
 </body>
+<footer>
+  <a id="BOTTOM"></a></p><p id="developedby"><u><b>Developed By:</b></u><br> Debaka Timilsina (M.A, M.Ed; LL.B) <br> Shiva Prasad
+    Acharya
+    (M.Sc.; LL.M)<br> श्री अक्षयतृतीया, २०८० 
+<div class="link-container">
+    <a href="#TOP">&#x25B2;</a>
+    <a href="#MIDDLE">X&#772;</a>
+    <a href="#BOTTOM">&#x25BC;</a>
+</div>
+</footer>
 </html>
-<!--transpose of all tables, auto filled with breaks, bold and underline, format preserved in transpose-->
